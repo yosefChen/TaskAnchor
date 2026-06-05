@@ -8,5 +8,3 @@ class Task:
 
     def to_string(self) -> str:
         return f'{self.task_id}|{self.developer}|{self.description}|{self.file_path}'
-
-
