@@ -26,7 +26,7 @@ def create_task(details: dict) -> str:
     return new_task.to_string()
 
 
-def new_file_procedure() -> tuple:
+def register_new_task() -> tuple:
     task_info = get_new_task_details()
     info_str = create_task(task_info)
     return info_str, task_info['file_path']
@@ -36,11 +36,11 @@ def write_log_info(info: str) -> None:
     utils.write_the_log(info)
 
 
-def action_execute(action: str):
+def execute_action(action: str):
     if action == 'new':
-        backup_file_info, file_path = new_file_procedure()
+        backup_file_info, file_path = register_new_task()
         write_log_info(backup_file_info)
-        utils.create_backup(backup_file_info)
+        utils.create_backup(file_path)
         print('The file has been copied successfully, and has been added to the log!')
     elif action == 'show':
         print(utils.read_log())
@@ -48,7 +48,7 @@ def action_execute(action: str):
         print('The program in closing down')
         print('Dont turn off the computer')
         sleep(3)
-        print('You can turn off now!')
+        print('The program will be shut down now')
 
 
 def get_user_action() -> str:
@@ -63,8 +63,12 @@ def get_user_action() -> str:
 
 
 def main() -> None:
+    action = ''
     show_menu()
-    action = get_user_action()
-    action_execute(action)
+    while action != 'exit':
+        action = get_user_action()
+        execute_action(action)
 
 
+if __name__ == "__main__":
+    main()
